@@ -1,0 +1,21 @@
+token:
+  password: 7b2e3f8a5d1c9f6e4a8b2c7d9e1f5a3b6c8d0e2f4a6b8c1d3e5f7a9b2c4d6e8
+  expiration: 86400000
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tasty
+    username: postgres
+    password: admin
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.format_sql: true
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true

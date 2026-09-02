@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: tasty-auth-service
+
+  profiles:
+    active: dev
+
+server:
+  port: 8085
+  servlet:
+    context-path: /tasty-auth-service

@@ -1,0 +1,155 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.springframework.boot' version '3.1.12'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'jacoco'
+}
+
+group = 'br.com.tasty'
+version = '0.0.1-SNAPSHOT'
+
+ext {
+    set('springCloudVersion', '2022.0.3')
+}
+
+jar {
+    enabled = false
+}
+
+allprojects {
+
+    group = 'br.com.tasty'
+    version = '0.0.1-SNAPSHOT'
+
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'jacoco'
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom SpringBootPlugin.BOM_COORDINATES
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        }
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+}
+
+subprojects {
+
+    apply plugin: 'java'
+
+    tasks.withType(Test).configureEach {
+        useJUnitPlatform()
+    }
+
+    dependencies {
+
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-security'
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+        implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+        implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.5'
+
+        implementation 'com.auth0:java-jwt:4.4.0'
+
+        implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+
+        implementation 'com.google.code.gson:gson:2.13.1'
+
+        runtimeOnly 'org.postgresql:postgresql'
+
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation 'org.springframework.security:spring-security-test'
+
+        testCompileOnly 'org.projectlombok:lombok'
+        testAnnotationProcessor 'org.projectlombok:lombok'
+    }
+
+    jacoco {
+        toolVersion = "0.8.12"
+    }
+
+    tasks.test {
+        finalizedBy tasks.jacocoTestReport
+    }
+
+    tasks.jacocoTestReport {
+        dependsOn tasks.test
+        reports {
+            xml.required.set(true)
+            html.required.set(true)
+        }
+    }
+}
+
+dependencies {
+
+    implementation project(':common')
+    implementation project(':contract')
+    implementation project(':impl')
+    implementation project(':integration')
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.5'
+
+    implementation 'com.auth0:java-jwt:4.4.0'
+
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+
+    implementation 'com.google.code.gson:gson:2.13.1'
+
+    runtimeOnly 'org.postgresql:postgresql'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+application {
+    mainClass = 'br.com.tasty.TastyAuthServiceApplication'
+}
+
+bootJar {
+    enabled = true
+    archiveFileName = 'tasty-auth-service.jar'
+    mainClass = 'br.com.tasty.TastyAuthServiceApplication'
+}

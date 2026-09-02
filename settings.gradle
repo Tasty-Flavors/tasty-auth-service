@@ -1,0 +1,6 @@
+rootProject.name = 'tasty-auth-service'
+
+include 'common'
+include 'contract'
+include 'impl'
+include 'integration'
