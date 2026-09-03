@@ -15,7 +15,7 @@ public class AutenticacaoController {
     private final AutenticacaoService autenticacaoService;
 
     @GetMapping("/token/info")
-    public String validarToken(@RequestHeader("accessToken") String token) {
-        return autenticacaoService.validarToken(token);
+    public String validarToken(@RequestHeader("accessToken") String authorization) {
+        return autenticacaoService.validarToken(authorization);
     }
 }

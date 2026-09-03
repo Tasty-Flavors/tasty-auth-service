@@ -20,7 +20,6 @@ public class JwtClaim {
         );
 
         this.claimFactory = claimFactory;
-        System.out.println("VALIDANDO: " + passwordToken);
     }
 
     public DecodedJWT buscaClaim(String token) {
