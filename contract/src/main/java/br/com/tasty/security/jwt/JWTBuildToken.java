@@ -6,10 +6,13 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.google.gson.Gson;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.Objects;
+
+import static br.com.tasty.exception.ExceptionMaker.buildGenericException;
 
 @Component
 public class JWTBuildToken {
@@ -52,5 +55,19 @@ public class JWTBuildToken {
                                 .sign(Algorithm.HMAC512(passwordToken))
                 )
                 .build();
+    }
+
+    public String validarToken(String token) {
+        try {
+            Integer codigoUsuario = JWT.require(Algorithm.HMAC512(passwordToken))
+                    .build()
+                    .verify(token)
+                    .getClaim("id")
+                    .asInt();
+
+            return String.valueOf(codigoUsuario);
+        } catch (Exception e) {
+            throw buildGenericException("Token inválido", HttpStatus.BAD_REQUEST);
+        }
     }
 }
