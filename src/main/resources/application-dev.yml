@@ -4,9 +4,9 @@ token:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/tasty
-    username: postgres
-    password: admin
+    url: jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:6543/postgres?sslmode=require
+    username: postgres.iykjkcorptulnxbathkc
+    password: XFQsA89tc3ljpM7e
     driver-class-name: org.postgresql.Driver
 
   jpa:

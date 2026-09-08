@@ -97,8 +97,28 @@ public interface UsuarioRepository {
             keyProperty = "codigoUsuario",
             keyColumn = "codigo_usuario"
     )
-    void cadastrar(UsuarioImpl usuario);
+    void cadastrarUsuario(UsuarioImpl usuario);
 
+    @Insert("""
+    INSERT INTO RESTAURANTE
+    (
+        CODIGO_USUARIO,
+        NOME_ESTABELECIMENTO,
+        DATA_CADASTRO
+    )
+    VALUES
+    (
+        #{codigoUsuario},
+        #{nomeEstabelecimento},
+        CURRENT_TIMESTAMP
+    )
+    """)
+    @Options(
+            useGeneratedKeys = true,
+            keyProperty = "codigoUsuario",
+            keyColumn = "codigo_restaurante"
+    )
+    void cadastrarRestaurante(UsuarioImpl restaurante);
 
     @Update("""
         UPDATE USUARIO

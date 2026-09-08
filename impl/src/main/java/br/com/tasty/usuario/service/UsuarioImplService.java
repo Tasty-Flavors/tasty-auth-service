@@ -4,6 +4,7 @@ import br.com.tasty.usuario.model.UsuarioImpl;
 import br.com.tasty.usuario.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,8 +20,10 @@ public class UsuarioImplService {
         return usuarioRepository.buscaPorId(id);
     }
 
+    @Transactional
     public void cadastrar(UsuarioImpl usuario) {
-        usuarioRepository.cadastrar(usuario);
+        usuarioRepository.cadastrarUsuario(usuario);
+        usuarioRepository.cadastrarRestaurante(usuario);
     }
 
     public void validaBloqueio(UsuarioImpl usuario) {
