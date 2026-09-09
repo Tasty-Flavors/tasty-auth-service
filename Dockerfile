@@ -1,8 +1,16 @@
+FROM gradle:8.5-jdk21 AS build
+
+WORKDIR /app
+
+COPY . .
+
+RUN ./gradlew clean bootJar --no-daemon
+
 FROM eclipse-temurin:21-jre
 
 WORKDIR /app
 
-COPY build/libs/tasty-auth-service.jar app.jar
+COPY --from=build /app/build/libs/tasty-auth-service.jar app.jar
 
 EXPOSE 8085
 
