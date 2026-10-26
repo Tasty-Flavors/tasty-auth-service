@@ -4,9 +4,9 @@ token:
 
 spring:
   datasource:
-    url: jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:6543/postgres?sslmode=require
-    username: postgres.iykjkcorptulnxbathkc
-    password: XFQsA89tc3ljpM7e
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   jpa:
